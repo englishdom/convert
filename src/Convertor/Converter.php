@@ -6,6 +6,7 @@ use Convertor\Exception\InvalidFilterException;
 use Convertor\Exception\OutputFilterException;
 use Convertor\Filter\Apostrophe;
 use Convertor\Filter\Dash;
+use Convertor\Filter\Dots;
 use Convertor\Filter\FilterInterface;
 use Convertor\Filter\Quotes;
 use Convertor\Input\InputInterface;
@@ -119,6 +120,7 @@ class Converter
             new Dash(),
             new Apostrophe(),
             new Quotes(),
+            new Dots(),
         ];
         $this->setFilters($filters);
     }
