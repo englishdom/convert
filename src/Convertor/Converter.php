@@ -49,7 +49,7 @@ class Converter
         $response = $this->getInput()->write($text);
         foreach ($this->getFilters() as $filter) {
             $response = $filter->filter($response);
-            if (!$response) {
+            if (strlen($text) > 0 && !$response) {
                 throw new OutputFilterException('Filter\'s result is empty! Filter:' . get_class($filter));
             }
         }
