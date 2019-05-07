@@ -2,10 +2,10 @@
 
 namespace Unit\Convertor\Filter;
 
-use Convertor\Filter\Dash;
+use Convertor\Filter\HtmlStrip;
 use PHPUnit\Framework\TestCase;
 
-class DashTest extends TestCase
+class HtmlStripTest extends TestCase
 {
     /**
      * @dataProvider inputProvider
@@ -14,7 +14,7 @@ class DashTest extends TestCase
      */
     public function testFilter($original, $expected)
     {
-        $filter = new Dash();
+        $filter = new HtmlStrip();
         $response = $filter->filter($original);
 
         $this->assertEquals($expected, $response);
@@ -24,20 +24,8 @@ class DashTest extends TestCase
     {
         return [
             [
-                'super–test', /* &ndash; */
-                'super-test'
-            ],
-            [
-                'super—man',
-                'super-man'
-            ],
-            [
-                'super‒work',
-                'super-work'
-            ],
-            [
-                'spider―man',
-                'spider-man'
+                '<a href="#">Some <bold>text</bold></a>',
+                'Some text'
             ],
         ];
     }
