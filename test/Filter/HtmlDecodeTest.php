@@ -2,10 +2,10 @@
 
 namespace Unit\Convertor\Filter;
 
-use Convertor\Filter\Dash;
+use Convertor\Filter\HtmlDecode;
 use PHPUnit\Framework\TestCase;
 
-class DashTest extends TestCase
+class HtmlDecodeTest extends TestCase
 {
     /**
      * @dataProvider inputProvider
@@ -14,7 +14,7 @@ class DashTest extends TestCase
      */
     public function testFilter($original, $expected)
     {
-        $filter = new Dash();
+        $filter = new HtmlDecode();
         $response = $filter->filter($original);
 
         $this->assertEquals($expected, $response);
@@ -24,20 +24,8 @@ class DashTest extends TestCase
     {
         return [
             [
-                'super–test', /* &ndash; */
-                'super-test'
-            ],
-            [
-                'super—man',
-                'super-man'
-            ],
-            [
-                'super‒work',
-                'super-work'
-            ],
-            [
-                'spider―man',
-                'spider-man'
+                'Some&nbsp;&ndash;&nbsp;&quot;text&quot;',
+                'Some – "text"'
             ],
         ];
     }

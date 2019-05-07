@@ -16,6 +16,9 @@ use Convertor\Output;
 
 class Converter
 {
+    public const APPEND = true;
+    public const PREPEND = false;
+
     /**
      * @var InputInterface
      */
@@ -105,13 +108,36 @@ class Converter
      */
     public function setFilters(array $filters): self
     {
-        foreach ($filters as &$filter) {
+        foreach ($filters as $filter) {
             if (!$filter instanceof FilterInterface) {
                 throw new InvalidFilterException('Invalid filter:'.get_class($filter));
             }
         }
         $this->filters = $filters;
         return $this;
+    }
+
+    /**
+     * Add filters
+     * @param array $filters
+     * @param bool  $priority
+     * @return Converter
+     */
+    public function addFilters(array $filters, bool $priority = self::APPEND): self
+    {
+        foreach ($filters as $filter) {
+            if (!$filter instanceof FilterInterface) {
+                throw new InvalidFilterException('Invalid filter:'.get_class($filter));
+            }
+            switch ($priority) {
+                case self::APPEND:
+                    array_push($this->filters, $filter);
+                    break;
+                case self::PREPEND:
+                    array_unshift($this->filters, $filter);
+                    break;
+            }
+        }
     }
 
     protected function setDefaultFilters()
